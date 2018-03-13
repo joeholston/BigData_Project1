@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# DB files
+Traffic_Violations.csv
+Traffic_Violations.json
+
 # C extensions
 *.so
 
