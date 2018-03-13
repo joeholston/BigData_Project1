@@ -18,6 +18,4 @@ dictList = []
 for row in reader:
     dictList.append(row)
 
-    #jsonFile.write('\n')
-
 json.dump(dictList, jsonFile, separators=(',', ':'))
