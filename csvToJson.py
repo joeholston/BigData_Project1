@@ -15,7 +15,9 @@ next(reader, None)
 
 dictList = []
 
-for row in reader:
+for i, row in enumerate(reader):
     dictList.append(row)
+    if(i > 1000):
+        break
 
 json.dump(dictList, jsonFile, separators=(',', ':'))
