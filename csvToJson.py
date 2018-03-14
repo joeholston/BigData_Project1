@@ -21,3 +21,6 @@ for i, row in enumerate(reader):
         break
 
 json.dump(dictList, jsonFile, separators=(',', ':'))
+
+csvFile.close()
+jsonFile.close()
