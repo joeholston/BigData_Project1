@@ -43,3 +43,6 @@ for i, row in enumerate(reader):
 #if i >= 5:
 #
 #json.dump(dictList, jsonFile, separators=(',', ':'), indent=4)
+
+csvFile.close()
+jsonFile.close()
