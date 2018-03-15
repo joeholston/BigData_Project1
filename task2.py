@@ -15,7 +15,7 @@ class DecimalEncoder(json.JSONEncoder):
         return super(DecimalEncoder, self).default(o)
 
 # Connect to local DynamoDB instance
-dynamodb = boto3.resource('dynamodb', endpoint_url='http://localhost:8000')
+dynamodb = boto3.resource('dynamodb', endpoint_url='http://localhost:8080')
 
 table = dynamodb.Table('violations')
 
