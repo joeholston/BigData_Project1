@@ -2,11 +2,11 @@
 import os
 os.environ["TZ"] = "UTC"
 
-import boto3
+import boto3, json
 from boto3.dynamodb.conditions import Key, Attr
 
 # Connect to local DynamoDB instance
-dynamodb = boto3.resource('dynamodb', endpoint_url='http://localhost:8080')
+dynamodb = boto3.resource('dynamodb', endpoint_url='http://localhost:8000')
 
 table = dynamodb.Table('violations')
 
@@ -15,11 +15,10 @@ def findByDate(searchDate):
     response = table.scan(
         FilterExpression=Key('date_of_stop').eq(searchDate)
     )
-    count = 0
+    results = []
     for i in response['Items']:
-        count += 1
-    return count
-
+        results.append({"time_of_stop" : i['time_of_stop'], "subagency" : i['subagency'], "description" : i['description']})
+    print(json.dumps(results, indent=4))
 
 def countOutOfStateCars():
     response = table.scan(
@@ -28,9 +27,9 @@ def countOutOfStateCars():
     count = 0
     for i in response['Items']:
         count += 1
-    return count
+    print("Out of state cars:", count)
 
 #def findWorstOwners():
 
-print("Date Search:", findByDate('08/29/2017'))
-print("Out of state cars:", countOutOfStateCars())
+findByDate('08/29/2017')
+countOutOfStateCars()
