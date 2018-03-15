@@ -11,8 +11,8 @@ dynamodb = boto3.resource('dynamodb', endpoint_url='http://localhost:8000')
 table = dynamodb.Table('violations')
 
 def findByDate(searchDate):
-    response = table.scan(
-        FilterExpression=Key('date_of_stop').eq(searchDate)
+    response = table.query(
+        KeyConditionExpression=Key('date_of_stop').eq(searchDate)
     )
     results = []
     for i in response['Items']:
@@ -28,8 +28,9 @@ def countOutOfStateCars():
         count += 1
     print("Out of state cars:", count)
 
-#def findWorstOwners():
+def findWorstOwners():
 
-#findWorstOwners()
+
 findByDate('08/29/2017')
 countOutOfStateCars()
+findWorstOwners()
