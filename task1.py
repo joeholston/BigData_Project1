@@ -44,4 +44,37 @@ table = dynamodb.create_table(
         'WriteCapacityUnits': 10
     }
 )
+
+makeIndex =[
+    {"Create": {
+            "IndexName": "make-index",
+            "KeySchema": [{
+                "AttributeName": "make",
+                "KeyType": "HASH"
+                }],
+            'Projection': {
+                'ProjectionType': "ALL",
+
+                },
+            'ProvisionedThroughput': {
+                'ReadCapacityUnits': 5,
+                'WriteCapacityUnits': 5
+            }
+            }},
+    ]
+table.update(AttributeDefinitions=[
+    {
+        'AttributeName': 'date_of_stop',
+        'AttributeType': 'S'
+    },
+    {
+        'AttributeName': 'location',
+        'AttributeType': 'S'
+    },
+    {
+        'AttributeName': 'make',
+        'AttributeType': 'S'
+    }
+    ], GlobalSecondaryIndexUpdates=makeIndex)
+
 print("Table created")
