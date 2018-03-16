@@ -51,5 +51,4 @@ for i, v in enumerate(reader):
     if i >= 1000:
         break
 
-
 csvFile.close()

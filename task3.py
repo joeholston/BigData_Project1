@@ -2,8 +2,9 @@
 import os
 os.environ["TZ"] = "UTC"
 
-import boto3, json
+import boto3, json, operator
 from boto3.dynamodb.conditions import Key, Attr
+from operator import itemgetter
 
 # Connect to local DynamoDB instance
 dynamodb = boto3.resource('dynamodb', endpoint_url='http://localhost:8000')
@@ -27,9 +28,21 @@ def countOutOfStateCars():
     for i in response['Items']:
         count += 1
     print("Out of state cars:", count)
+    return count
 
 def findWorstOwners():
-
+    response = table.scan(
+        FilterExpression=Attr('make').ne(' ')
+    )
+    makeCount = {}
+    for i in response['Items']:
+        if i['make'] in makeCount:
+            makeCount[i['make']] += 1
+        else:
+            makeCount[i['make']] = 1
+    sortedMakeCount = sorted(makeCount.items(), key=operator.itemgetter(1))
+    print("The make with the most violations is- ", sortedMakeCount[len(sortedMakeCount) - 1])
+    return sortedMakeCount[len(sortedMakeCount) - 1]
 
 findByDate('08/29/2017')
 countOutOfStateCars()
