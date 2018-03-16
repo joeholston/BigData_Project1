@@ -28,8 +28,6 @@ fields = ("date_of_stop","time_of_stop","agency","subagency","description",
     "violation_type","charge","article","contributed_to_accident","race","gender",
     "driver_city","driver_state","dl_state","arrest_type","geolocation")
 
-
-
 # Open the csv and skip the headers
 reader = csv.DictReader(csvFile, fields)
 next(reader, None)
@@ -38,17 +36,15 @@ items = []
 
 for i, v in enumerate(reader):
     row = dict(v)
-    print("Row:", i, "Partition: ", v['date_of_stop'], " Sort: ", v['location'])
     for key in list(row.keys()):
         if row[key] == "":
-            print("Deleted:", key)
+            if(key == "time_of_stop"):
+                print("No range key")
             del row[key]
 
-    #try:
     table.put_item(Item=row)
-    #except ClientError:
 
-    if i >= 1000:
+    if i >= 715:
         break
 
 csvFile.close()

@@ -25,7 +25,7 @@ table = dynamodb.create_table(
             'KeyType': 'HASH'
         },
         {
-            'AttributeName': 'location',
+            'AttributeName': 'time_of_stop',
             'KeyType': 'RANGE'
         }
     ],
@@ -35,7 +35,7 @@ table = dynamodb.create_table(
             'AttributeType': 'S'
         },
         {
-            'AttributeName': 'location',
+            'AttributeName': 'time_of_stop',
             'AttributeType': 'S'
         }
     ],
@@ -68,7 +68,7 @@ table.update(AttributeDefinitions=[
         'AttributeType': 'S'
     },
     {
-        'AttributeName': 'location',
+        'AttributeName': 'time_of_stop',
         'AttributeType': 'S'
     },
     {

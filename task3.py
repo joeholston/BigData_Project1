@@ -16,9 +16,14 @@ def findByDate(searchDate):
         KeyConditionExpression=Key('date_of_stop').eq(searchDate)
     )
     results = []
+
+    print('Time of Stop\tSubagency\tDescription')
+
     for i in response['Items']:
-        results.append({"time_of_stop" : i['time_of_stop'], "subagency" : i['subagency'], "description" : i['description']})
-    print(json.dumps(results, indent=4))
+        print("%10s %30s %8s" % (i["time_of_stop"], i["subagency"], i["description"]))
+        results.append({"time_of_stop" : i['time_of_stop'],
+            "subagency" : i['subagency'],
+            "description" : i['description']})
 
 def countOutOfStateCars():
     response = table.scan(
